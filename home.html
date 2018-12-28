@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <title>Books Store</title>
+    <link rel="stylesheet" href="home.css" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(e){
+        $.getJSON("books.json", function(json){
+            $("#tableA").append("<tr></tr>");
+            $("#tableB").append("<tr></tr>");
+            $.each(json.items, function(i, item) {
+                var char = item.volumeInfo.title[0];                
+                if(char >= 'A' && char <= 'M'){
+                    var row = $("#tableA tr:last");
+                    AddBookToTable(row, item);
+                    if(row.length == 6){
+                        $("#tableA").append("<tr></tr>");
+                    }   
+                }
+                if(char >= 'N' && char <= 'Z'){
+                    var row = $("#tableB tr:last");
+                    AddBookToTable(row, item);
+                    if(row.length == 6){
+                        $("#tableB").append("<tr></tr>");
+                    }   
+                }          
+            });
+        });
+    });
+
+    function AddBookToTable(row, item){ 
+        row.append("<td><img src='" + item.volumeInfo.imageLinks.smallThumbnail + "'/></td");
+    }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div>Assemble Books</div>
+    </div>
+    <div class="container">
+        <h1 class=test>Books</h1>
+    </div>
+    <div class="container">        
+        <h6>Titles A-M</h6>
+        <table class="table" id="tableA">
+        </table>
+    </div>
+    <div class="container">        
+        <h6>Titles N-Z</h6>
+        <table class="table" id="tableB">
+        </table>
+    </div>
+</body>
+</html>
